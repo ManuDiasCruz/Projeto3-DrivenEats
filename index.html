@@ -63,7 +63,7 @@
 
             <article class="prato" data-classentifier="food-option" onclick="selecionarPrato(this)">
                 <img src="img/TagliateleFilé.jpg" alt="Tagliatele com filé alto">
-                <h3 class="nome" data-classentifier="food-title">Tagliatele al Funghi e Filé Alto</h3 class="nome">
+                <h3 class="nome" data-classentifier="food-title">Tagliatele e Filé Alto</h3 class="nome">
                 <p>Tagliatele ao molho Funghi e Filé Alto</p>
                 <h4 class="preco" data-classentifier="food-price">R$ 65,90</h4 class="preco">
                 <ion-icon name="checkmark-circle"></ion-icon>
@@ -71,7 +71,7 @@
 
             <article class="prato" data-classentifier="food-option" onclick="selecionarPrato(this)">
                 <img src="img/SpatzelStrogonoff.jpg" alt="Spätzel com escalope e legumes">
-                <h3 class="nome" data-classentifier="food-title">Spätzel com Escalope al Grana Padano</h3 class="nome">
+                <h3 class="nome" data-classentifier="food-title">Spätzel com Escalope</h3 class="nome">
                 <p>Acompanha legumes no vapor</p>
                 <h4 class="preco" data-classentifier="food-price">R$ 53,99</h4 class="preco">
                 <ion-icon name="checkmark-circle"></ion-icon>
@@ -79,7 +79,7 @@
 
             <article class="prato" data-classentifier="food-option" onclick="selecionarPrato(this)">
                 <img src="img/CaneloneAbrobinha.jpg" alt="Canelone de abobrinha">
-                <h3 class="nome" class="nome" data-classentifier="food-title">Canelone de Abobrinha a Bolhonesa</h3 class="nome" class="nome">
+                <h3 class="nome" class="nome" data-classentifier="food-title">Canelone de Abobrinha</h3 class="nome" class="nome">
                 <p>Acompanha arroz integral</p>
                 <h4 class="preco" data-classentifier="food-price">R$ 43,90</h4 class="preco">
                 <ion-icon name="checkmark-circle"></ion-icon>
@@ -98,7 +98,7 @@
 
             <article class="bebida" data-classentifier="food-option" onclick="selecionarBebida(this)">
                 <img src="img/vinhoBranco.jpg" alt="Vinho Baron Philippe De Rothschild Branco">
-                <h3 class="nome" data-classentifier="food-title">Vinho Baron P. De Rothschild</h3 class="nome">
+                <h3 class="nome" data-classentifier="food-title">B. P. De Rothschild</h3 class="nome">
                 <p>Vinho Sauvignon Blanc 750ml. França, 2019</p>
                 <h4 class="preco" data-classentifier="food-price">R$ 219,50</h4 class="preco">
                 <ion-icon name="checkmark-circle"></ion-icon>
@@ -150,7 +150,7 @@
         <section data-classentifier="desserts">
             <article class="sobremesa" data-classentifier="food-option" onclick="selecionarSobremesa(this)">
                 <img src="img/M&MsCake.jpg" alt="fatia de Giant Cookie recheado de nutella">
-                <h3 class="nome" data-classentifier="food-title">Giant M&M's Nutella Cookie</h3 class="nome">
+                <h3 class="nome" data-classentifier="food-title">M&M's Nutella Cookie</h3 class="nome">
                 <p>Fatia de cookie gigante de M&M's recheado de Nutella</p>
                 <h4 class="preco" data-classentifier="food-price">R$ 28,99</h4 class="preco">
                 <ion-icon name="checkmark-circle"></ion-icon>
@@ -158,7 +158,7 @@
 
             <article class="sobremesa" data-classentifier="food-option" onclick="selecionarSobremesa(this)">
                 <img src="img/cupcakemorangoCreamCheese.jpg" alt="Cupcake de Morango e Cream Cheese">
-                <h3 class="nome" data-classentifier="food-title">Cupcake de Morango e Cream Cheese</h3 class="nome">
+                <h3 class="nome" data-classentifier="food-title">Cupcake de Morango</h3 class="nome">
                 <p>Coberto com chocolate Ruby</p>
                 <h4 class="preco" data-classentifier="food-price">R$ 18,97</h4 class="preco">
                 <ion-icon name="checkmark-circle"></ion-icon>
@@ -197,12 +197,40 @@
             </article>
         </section>
 
+        <section class="telaConfirmacao escondido" data-identifier="confirmation-dialog">
+            <div class="janelaConfirmacao">
+                <h1>Confirme seu pedido</h1>
+                <div class="conteudoJanela">
+                    <div class="item">
+                        <p class="pratoEscolhido"></p>
+                        <p class="precoPrato"></p>
+                    </div>
+                    <div class="item">
+                        <p class="bebidaEscolhida"></p>
+                        <p class="precoBebida"></p>
+                    </div>
+                    <div class="item">
+                        <p class="sobremesaEscolhida"></p>
+                        <p class="precoSobremesa"></p>
+                    </div>
+                    <div class="totalPedido">
+                        <p class="total">Total</p>
+                        <p class="valorTotal"></p>
+                    </div>
+                </div>
+                <button class="botaoConfirmacao" onclick="enviarPedido()">Tudo certo, pode pedir!</button>
+                <a href="#" class="cancelar"><p onclick="cancelar()">Cancelar</p></a>
+            </div>
+        </section>
+
     </main>
 
     <!-- Rodapé fixo da página c/ botão de fechar pedclasso -->
     <footer>
-        <button class=".botao" onclick="criarPedido()">Selecione os 3 itens para fechar o pedclasso</button>
+        <button class="botao" onclick="fecharPedido()">Selecione os 3 itens para fechar o pedclasso</button>
     </footer>
+
+    <!-- Importação de arquivos de código para ícones e funções de iteração com site -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="src/script.js"></script>

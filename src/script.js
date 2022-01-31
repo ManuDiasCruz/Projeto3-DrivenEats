@@ -1,10 +1,11 @@
 let prato, bebida, sobremesa = null;
-let precoPrato, precoBebida, precoSobremesa = 0;
+let precoPrato, precoBebida, precoSobremesa, precoTotal = 0;
+let nome, endereco = null;
 
 
 function selecionarPrato(itemSelecionado){
-    prato = pegaNome(itemSelecionado);
-    precoPrato = pegaPreco(itemSelecionado);
+    prato = pegarNome(itemSelecionado);
+    precoPrato = pegarPreco(itemSelecionado);
     
     // Esse for serve para procurar se há algum prato selecionado, se tiver ele desmarca
     let pratos = document.querySelectorAll(".prato");
@@ -18,8 +19,8 @@ function selecionarPrato(itemSelecionado){
 }
 
 function selecionarBebida(itemSelecionado){
-    bebida = pegaNome(itemSelecionado);
-    precoBebida = pegaPreco(itemSelecionado);
+    bebida = pegarNome(itemSelecionado);
+    precoBebida = pegarPreco(itemSelecionado);
 
     // Esse for serve para procurar se há alguma bebida selecionado, se tiver ele desmarca
     let bebidas = document.querySelectorAll(".bebida");
@@ -33,8 +34,8 @@ function selecionarBebida(itemSelecionado){
 }
 
 function selecionarSobremesa(itemSelecionado){
-    sobremesa = pegaNome(itemSelecionado);
-    precoSobremesa = pegaPreco(itemSelecionado);
+    sobremesa = pegarNome(itemSelecionado);
+    precoSobremesa = pegarPreco(itemSelecionado);
 
     // Esse for serve para procurar se há alguma sobremesa selecionado, se tiver ele desmarca
     let sobremesas = document.querySelectorAll(".sobremesa");
@@ -47,11 +48,39 @@ function selecionarSobremesa(itemSelecionado){
     ativarBotao();
 }
 
+// Função usada para fechar os dados do pedido
+function fecharPedido(){
+    alert("Para confirmar seu pedido precisarei de mais algumas informações...");
+    pegarNomeUsuario();
+    pegarEnderecoUsuario();
+    ativarTelaConfirmacao();
+}
+
+// Função para alterar a forma do botão de encerramento do pedido, aparecendo ativado
+function ativarTelaConfirmacao() {
+    if ((prato!=null)&&(bebida!=null)&&(sobremesa!=null)){
+        const tela = document.querySelector(".telaConfirmacao");
+        tela.classList.remove("escondido");
+        document.querySelector(".pratoEscolhido").innerHTML = prato;
+        document.querySelector(".precoPrato").innerHTML = precoPrato.toFixed(2).toString().replace('.', ',');
+        document.querySelector(".bebidaEscolhida").innerHTML = bebida;
+        document.querySelector(".precoBebida").innerHTML = precoBebida.toFixed(2).toString().replace('.', ',');
+        document.querySelector(".sobremesaEscolhida").innerHTML = sobremesa;
+        document.querySelector(".precoSobremesa").innerHTML = precoSobremesa.toFixed(2).toString().replace('.', ',');
+        
+        document.querySelector(".valorTotal").innerHTML = formatarPreco(precoTotal);
+    }
+}
+
+function cancelar(){
+    const tela = document.querySelector(".telaConfirmacao");
+    tela.classList.add("escondido");
+}
 
 // Função usada para montar o pedido do cliente
-function criarPedido(){
+function enviarPedido(){
     if ((prato!=null)&&(bebida!=null)&&(sobremesa!=null)){
-        let totalConta = formatarPreco(precoPrato+precoBebida+precoSobremesa);
+        let totalConta = formatarPreco(precoTotal);
         let mensagem = montarMsg(totalConta);
         enviarMsgWhatsApp("+5583999999999", mensagem);
     }
@@ -59,11 +88,12 @@ function criarPedido(){
 
 // Função para alterar a forma do botão de encerramento do pedido, aparecendo ativado
 function ativarBotao() {
-    const botao = document.querySelector("button");
+    const botao = document.querySelector(".botao");
     if ((prato!=null)&&(bebida!=null)&&(sobremesa!=null)){
-        botao.classList.remove("botao");
         botao.classList.add("botaoSelecionado");
+        botao.classList.remove("botao");
         botao.innerHTML = "Fechar pedido";
+        precoTotal = precoPrato+precoBebida+precoSobremesa;
     }
 }
 
@@ -75,18 +105,28 @@ function enviarMsgWhatsApp(telefone, mensagem){
 // Função para montar texto da mensagem com o pedido
 function montarMsg(totalGasto){    
     let mensagem = "Olá, gostaria de fazer o pedido:\n- Prato: " + prato + "\n- Bebida: " + bebida + "\n- Sobremesa: " + sobremesa + 
-                   "Total: " + totalGasto;
+                "Total: " + totalGasto + "\nNome: " + nome + "\nEndereço: " + endereco;
     return mensagem;
 }
 
 // Função para procurar a tag 'nome' e retornar seu texto dentre os elementos do parâmetro 'item'
-function pegaNome(item){
+function pegarNomeUsuario(){
+    nome = prompt("Digite seu nome: ");
+}
+
+// Função para procurar a tag 'nome' e retornar seu texto dentre os elementos do parâmetro 'item'
+function pegarEnderecoUsuario(){
+    endereco = prompt("Digite seu endereço: ");
+}
+
+// Função para procurar a tag 'nome' e retornar seu texto dentre os elementos do parâmetro 'item'
+function pegarNome(item){
     const nome = item.querySelector(".nome").innerHTML;
     return nome;
 }
 
 // Função para procurar a tag 'preco' e retornar seu valor numérico dentre os elementos do parâmetro 'item'
-function pegaPreco(item){
+function pegarPreco(item){
     let aux = item.querySelector(".preco").innerHTML.replace("R$ ", "");
     aux = aux.replace(".", "");
     aux = aux.replace(",", ".");
